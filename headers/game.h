@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define ENTITY_COUNT 128
+#define ENTITY_COUNT 1024
 #define ENTITY_SPEED 0.015
 
 #include "../headers/sim.h"

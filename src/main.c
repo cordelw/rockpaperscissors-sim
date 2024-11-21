@@ -1,8 +1,8 @@
 #include "../headers/game.h"
 #include <SDL2/SDL_render.h>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 600
 
 /*
     TODO: Use command line args for
