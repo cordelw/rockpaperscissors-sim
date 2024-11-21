@@ -1,3 +1,5 @@
 # Rock Paper Scissors Simulator
 
-RPS sim written in C.
+Rock paper scissors sim written in C language.
+
+![Screenshot 0](captures/screenshot0.png)
