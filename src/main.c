@@ -40,7 +40,7 @@ char* substr(char* string, int offset, int stride)
     return substr;
 }
 
-void handleArgs(struct opts *options,int argc, char **argv)
+void handleArgs(struct opts *options, int argc, char **argv)
 {
     if (argc <= 1)
         return;
@@ -56,10 +56,11 @@ void handleArgs(struct opts *options,int argc, char **argv)
 
         switch (*opt)
         {
-            case 'w': options->w = atoi(val);
-            case 'h': options->h = atoi(val);
-            case 'c': options->c = atoi(val);
-            case 'f': options->f = atoi(val);
+            case 'w': options->w = atoi(val); break;
+            case 'h': options->h = atoi(val); break;
+            case 'c': options->c = atoi(val); break;
+            case 'f': options->f = atoi(val); break;
+            default: break;
         }
     }
 }
@@ -77,6 +78,7 @@ int main(int argc, char **argv)
     handleArgs(&opts, argc, argv);
 
     Game gctx;
+    printf("%d", opts.f);
     Game_Init(&gctx, opts.w, opts.h, opts.c, opts.f);
 
     while (gctx.running)
@@ -93,7 +95,7 @@ int main(int argc, char **argv)
         */
 
         // Lock framerate
-        if (gctx.target_delta_time != 0 && gctx.clock.delta_time < gctx.target_delta_time)
+        if (gctx.clock.delta_time < gctx.target_delta_time)
         {
             SDL_Delay(gctx.target_delta_time - gctx.clock.delta_time);
         }

@@ -85,7 +85,7 @@ void Game_Init(Game *game, int window_width, int window_height, int entity_count
 
     // Create renderer
     game->renderer = SDL_CreateRenderer(
-        game->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+        game->window, -1, SDL_RENDERER_ACCELERATED
     );
     if (game->renderer == NULL)
     {
@@ -105,7 +105,9 @@ void Game_Init(Game *game, int window_width, int window_height, int entity_count
 
     // Simulation framerate
     Clock_Init(&game->clock);
-    game->target_delta_time = 0.03333;
+
+    if (fps_max != 0)
+        game->target_delta_time = 1000.0/fps_max;
 
     // Allocate memory for entities
     game->entity_count = entity_count;
