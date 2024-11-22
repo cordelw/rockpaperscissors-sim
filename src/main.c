@@ -13,10 +13,10 @@
 */
 
 struct opts {
-    int w;
-    int h;
-    int c;
-    int f;
+    int width;
+    int height;
+    int count;
+    int framerate;
 };
 
 char* substr(char* string, int offset, int stride)
@@ -56,10 +56,10 @@ void handleArgs(struct opts *options, int argc, char **argv)
 
         switch (*opt)
         {
-            case 'w': options->w = atoi(val); break;
-            case 'h': options->h = atoi(val); break;
-            case 'c': options->c = atoi(val); break;
-            case 'f': options->f = atoi(val); break;
+            case 'w': options->width = atoi(val); break;
+            case 'h': options->height = atoi(val); break;
+            case 'c': options->count = atoi(val); break;
+            case 'f': options->framerate = atoi(val); break;
             default: break;
         }
     }
@@ -69,17 +69,16 @@ int main(int argc, char **argv)
 {
     // Set default opts
     struct opts opts;
-    opts.w = 600; // Window width
-    opts.h = 600; // Window height
-    opts.c = 64;  // Entity count
-    opts.f = 30;  // Framerate lock
+    opts.width = 600; // Window width
+    opts.height = 600; // Window height
+    opts.count = 64;  // Entity count
+    opts.framerate = 30;  // Framerate lock
 
     // Set opts with args
     handleArgs(&opts, argc, argv);
 
     Game gctx;
-    printf("%d", opts.f);
-    Game_Init(&gctx, opts.w, opts.h, opts.c, opts.f);
+    Game_Init(&gctx, opts.width, opts.height, opts.count, opts.framerate);
 
     while (gctx.running)
     {
