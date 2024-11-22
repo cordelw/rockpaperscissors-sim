@@ -8,7 +8,7 @@ void Game_Update(Game *game)
         entity.
     */
 
-    for (int i = 0; i < ENTITY_COUNT; i++)
+    for (int i = 0; i < game->entity_count; i++)
     {
         Entity *entity = &game->entities[i];
         Entity *t_entity;
@@ -23,7 +23,7 @@ void Game_Update(Game *game)
 
         // Find nearest killable entity
         float n_dist = 999999999.9;
-        for (int j = 0; j < ENTITY_COUNT; j++)
+        for (int j = 0; j < game->entity_count; j++)
         {
             // Only check target entities
             if (game->entities[j].type != target)

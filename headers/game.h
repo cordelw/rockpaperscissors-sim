@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define ENTITY_COUNT 1024
 #define ENTITY_SPEED 0.015
 
 #include "../headers/sim.h"
@@ -21,8 +20,10 @@ typedef struct
 
     // Sim
     Clock clock;
+    float target_delta_time;
     int unit_s;
-    Entity entities[ENTITY_COUNT];
+    int entity_count;
+    Entity *entities;
 } Game;
 
 void Game_LoadTextures(Game *game);
@@ -32,7 +33,7 @@ void Game_HandleEvents(Game *game);
 void Game_Update(Game *game);
 void Game_Draw(Game *game);
 
-void Game_Init(Game *game, int window_width, int window_height);
+void Game_Init(Game *game, int window_width, int window_height, int entity_count, int fps_max);
 void Game_Stop(Game *game);
 
 #endif

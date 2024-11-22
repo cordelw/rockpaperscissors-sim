@@ -9,7 +9,7 @@ void Game_Draw(Game *game)
 
     // Draw entities
     int i;
-    for (i = 0; i < ENTITY_COUNT; i++)
+    for (i = 0; i < game->entity_count; i++)
     {
         Sim_DrawEntity(game->entities[i], game->renderer, game->textures[game->entities[i].type]);
     }

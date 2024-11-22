@@ -36,7 +36,27 @@ void Game_DestroyTextures(Game *game)
     }
 }
 
-void Game_Init(Game *game, int window_width, int window_height)
+int rangeRand(int min, int max)
+{
+    return rand() % (max - min + 1) + min;
+}
+
+void Game_InitEntities(Game *game)
+{
+    srand(time(NULL));
+
+    for (int i = 0; i < game->entity_count; i++)
+    {
+        game->entities[i] = Sim_CreateEntity(
+            i % Sim_ETLast,
+            (float)rangeRand(0, game->window_width - game->unit_s),
+            (float)rangeRand(0, game->window_height - game->unit_s),
+            game->unit_s, game->unit_s
+        );
+    }
+}
+
+void Game_Init(Game *game, int window_width, int window_height, int entity_count, int fps_max)
 {
     game->window_width = window_width;
     game->window_height = window_height;
@@ -82,7 +102,14 @@ void Game_Init(Game *game, int window_width, int window_height)
 
     game->running = true;
     game->unit_s = window_height/32;
+
+    // Simulation framerate
     Clock_Init(&game->clock);
+    game->target_delta_time = 0.03333;
+
+    // Allocate memory for entities
+    game->entity_count = entity_count;
+    game->entities = (Entity *)malloc(game->entity_count * sizeof(Entity));
     Game_InitEntities(game);
 }
 
@@ -91,6 +118,7 @@ void Game_Stop(Game *game)
     // Clean Resources
     //
 
+    free(game->entities);
     Game_DestroyTextures(game);
 
     // SDL2 cleanup
@@ -99,28 +127,6 @@ void Game_Stop(Game *game)
     SDL_DestroyRenderer(game->renderer);
     SDL_DestroyWindow(game->window);
     SDL_Quit();
-}
-
-int rangeRand(int min, int max)
-{
-    return rand() % (max - min + 1) + min;
-}
-
-// Initialize entities to random locations on the screen
-void Game_InitEntities(Game *game)
-{
-    srand(time(NULL));
-
-    int i;
-    for (i = 0; i < ENTITY_COUNT; i++)
-    {
-        game->entities[i] = Sim_CreateEntity(
-            i % 3,
-            (float)rangeRand(0, game->window_width - game->unit_s),
-            (float)rangeRand(0, game->window_height - game->unit_s),
-            game->unit_s, game->unit_s
-        );
-    }
 }
 
 void Game_HandleEvents(Game *game)
